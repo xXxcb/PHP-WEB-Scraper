@@ -40,6 +40,5 @@
         $fxRates[$key] = array_merge($fxC[$key], $fxA[$key]);
     }
     
-    echo json_encode($fxRates, JSON_PRETTY_PRINT);
-
+    echo json_encode(array("exRates" => $fxRates), JSON_PRETTY_PRINT);
 ?>
