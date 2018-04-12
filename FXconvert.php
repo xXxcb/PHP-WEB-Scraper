@@ -5,56 +5,40 @@
     $dom = new DOMDocument();
     $html = $page;
     $data = array();
-    $fx = array();
-    $fxa = array();
+    $fxA = array();
     $fxC = array();
-    $fxM = array();
-    $fxRates = array();
-    $cnt = 0;
-    $n = 0;
+    $fxRates = array("fxRates");
     
     libxml_use_internal_errors(true);
     $dom->loadHTML($html);
     $xpath = new DOMXPath($dom);
 
-    $my_xpath_query = "//table//tbody[contains(@class, 'FxRContainer')]//td";
+    $my_xpath_query = "//table//tbody[contains(@class, 'FxRContainer')]//td[position() = 1 or position() = 2]";
     $result_rows = $xpath->query($my_xpath_query);
 
-
+    //Gets raw data from table
     foreach ($result_rows as $key=>$result_object) {  
-        $data[] = $result_object->nodeValue;
+        $data[] = trim($result_object->nodeValue);
     } 
 
-
-    for ($i=0; $i < 28; ++$i) { 
-        if( $i % 2 == 0 ) {
-            $fx[] = $data[$i];
-        }
-    }
-
-    //Trim extra Characters from infront currency/
+    //Trim extra Characters from infront currency and separate Currency from Amount
     for ($i=0; $i < 14; ++$i) { 
         if ( $i % 2 == 0 ) {
-            $fx[$i] = substr($fx[$i], 6);
+            $fxC[]["Currency"] = substr($data[$i], 6);
         }
     }
 
     //Separate currency labels and currency
     for ($i=0; $i < 14; ++$i) {         
-        if ($i % 2 == 0 ) {            
-            $fxC[$n] = $fx[$i];
-            $n++;
-        }
-    }
-    for ($i=0; $i < 14; ++$i) { 
-        if ($i % 2 <> 0) {
-            $fxM[$cnt] = $fx[$i];
-            $cnt++;
+        if ($i % 2 != 0 ) {            
+            $fxA[]["Amount"] = $data[$i];
         }
     }
 
-    //Combin 'fxC' and 'fxM' to on Associative Array
-    $fxRates = array_combine($fxC, $fxM);
+    //Combine Arrays
+    foreach ($fxC as $key => $value) {
+        $fxRates[$key] = array_merge($fxC[$key], $fxA[$key]);
+    }
     
     echo json_encode($fxRates, JSON_PRETTY_PRINT);
 
