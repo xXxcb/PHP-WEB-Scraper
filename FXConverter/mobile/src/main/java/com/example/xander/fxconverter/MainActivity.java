@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity  {
 
     private static final String URL_RATES = "http://fx.xdreamz.net/fx.php";
 
-
         private String TAG = MainActivity.class.getSimpleName();
 
         private ProgressDialog pDialog;
@@ -48,22 +47,7 @@ public class MainActivity extends AppCompatActivity  {
 
             fxList = new ArrayList<>();
 
-
             new getFxRates().execute();
-            lv.setAdapter(adapter);
-
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    int listClickVal = lv.getSelectedItemPosition();
-
-                    Log.d("SELECTED POSTION", String.valueOf(listClickVal));
-
-                    Intent intent = new Intent(MainActivity.this, ConvertActivity.class);
-                    intent.putExtra("ItemClick", listClickVal);
-                    startActivity(intent);
-                }
-            });
         }
 
         /**
@@ -76,7 +60,7 @@ public class MainActivity extends AppCompatActivity  {
                 super.onPreExecute();
                 // Showing progress dialog
                 pDialog = new ProgressDialog(MainActivity.this);
-                pDialog.setMessage("Please wait...");
+                pDialog.setMessage("Getting Updated Exchange Rates...");
                 pDialog.setCancelable(false);
                 pDialog.show();
             }
@@ -155,6 +139,20 @@ public class MainActivity extends AppCompatActivity  {
                         MainActivity.this, fxList,
                         R.layout.fx_list, new String[]{"Currency", "Amount"}, new int[]{R.id.curr, R.id.amount});
                 lv.setAdapter(adapter);
+
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        int listClickVal = lv.getSelectedItemPosition();
+
+                        Log.d("SELECTED POSTION", String.valueOf(fxList.get(i)));
+
+                        Intent intent = new Intent(MainActivity.this, ConvertActivity.class);
+                        intent.putExtra("ItemClick", adapterView.getItemAtPosition(i).toString());
+                        startActivity(intent);
+                    }
+                });
             }
 
         }

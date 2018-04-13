@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import java.text.DecimalFormat;
+
 public class ConvertActivity extends AppCompatActivity {
 
     @Override
@@ -13,14 +15,15 @@ public class ConvertActivity extends AppCompatActivity {
 
         EditText editText;
 
-
-            editText = (EditText)findViewById(R.id.editText1);
+        editText = (EditText)findViewById(R.id.editText1);
 
             // Receiving value into activity using intent.
             String TempHolder = getIntent().getStringExtra("ItemClick");
+            TempHolder = TempHolder.replaceAll("\\D+","");
+            Double amt = Double.parseDouble(TempHolder) / 100;
 
             // Setting up received value into EditText.
-            editText.setText(TempHolder);
+            editText.setText(amt.toString());
 
     }
 }
