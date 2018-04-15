@@ -112,14 +112,16 @@ public class MainActivity extends AppCompatActivity  {
 
                     }
                 } else {
+                    Intent intent = new Intent(MainActivity.this, NoItemInternetImage.class);
+                    startActivity(intent);
                     Log.e(TAG, "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Couldn't get json from server. Check LogCat for possible errors!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
+//                            Toast.makeText(getApplicationContext(),
+//                                    "Couldn't get json from server. Check LogCat for possible errors!",
+//                                    Toast.LENGTH_LONG)
+//                                    .show();
                         }
                     });
                 }
