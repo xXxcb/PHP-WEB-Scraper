@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity  {
 
     private static final String URL_RATES = "http://fx.xdreamz.net/fx.php";
 
-        private String TAG = MainActivity.class.getSimpleName();
-
         private ProgressDialog pDialog;
         private ListView lv;
 
@@ -72,7 +70,7 @@ public class MainActivity extends AppCompatActivity  {
                 // Making a request to url and getting response
                 String jsonStr = sh.makeServiceCall(URL_RATES);
 
-                Log.e(TAG, "Response from url: " + jsonStr);
+                Log.e("NO RESPONSE: ", "Response from url: " + jsonStr);
 
                 if (jsonStr != null) {
                     try {
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity  {
                             fxList.add(fx);
                         }
                     } catch (final JSONException e) {
-                        Log.e(TAG, "Json parsing error: " + e.getMessage());
+                        Log.e("PARSING ERROR: ", "Json parsing error: " + e.getMessage());
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -114,14 +112,10 @@ public class MainActivity extends AppCompatActivity  {
                 } else {
                     Intent intent = new Intent(MainActivity.this, NoItemInternetImage.class);
                     startActivity(intent);
-                    Log.e(TAG, "Couldn't get json from server.");
+                    Log.e("NO JSON: ", "Couldn't get json from server.");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            Toast.makeText(getApplicationContext(),
-//                                    "Couldn't get json from server. Check LogCat for possible errors!",
-//                                    Toast.LENGTH_LONG)
-//                                    .show();
                         }
                     });
                 }
@@ -146,7 +140,7 @@ public class MainActivity extends AppCompatActivity  {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                        int listClickVal = lv.getSelectedItemPosition();
+                        //int listClickVal = lv.getSelectedItemPosition();
 
                         Log.d("SELECTED POSTION", String.valueOf(fxList.get(i)));
 

@@ -3,4 +3,6 @@
     <string name="rate">Exchange Rate: </string>
     <string name="jmd">JMD</string>
     <string name="RETRY">Try Again</string>
+    <string name="no_net">No internet connections found. Check your connection or try again</string>
+
 </resources>

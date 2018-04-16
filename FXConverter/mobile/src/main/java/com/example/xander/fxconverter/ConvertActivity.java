@@ -1,5 +1,9 @@
 package com.example.xander.fxconverter;
 
+/**
+ * Created by Xander on 11/4/2018.
+ */
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +16,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
 
 public class ConvertActivity extends AppCompatActivity {
 
@@ -25,12 +30,15 @@ public class ConvertActivity extends AppCompatActivity {
         final TextView txt = (TextView) findViewById(R.id.txtRate);
         final TextView txtR = (TextView) findViewById(R.id.txtJMD);
         final TextView txtF = (TextView) findViewById(R.id.txtFarin);
+        final DecimalFormat dec = new DecimalFormat("#,###.##");
 
             // Receiving value into activity using intent.
             String TempHolder = getIntent().getStringExtra("ItemClick");
+
+
+            //Extract Currency amount from Intent
             TempHolder = TempHolder.replaceAll("\\D+","");
             final Double amt = Double.parseDouble(TempHolder) / 100;
-
 
             txtF.setText("1");
             txt.setText("$ "+ amt.toString());
@@ -48,7 +56,7 @@ public class ConvertActivity extends AppCompatActivity {
                         try {
                             Double farinVal = Double.parseDouble(txtF.getText().toString());
                             Log.e("FARIN: ", farinVal.toString());
-                            Toast.makeText(ConvertActivity.this, farinVal.toString(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ConvertActivity.this, farinVal.toString(), Toast.LENGTH_SHORT).show();
                             txtR.setText(fromFarin(farinVal, amt).toString());
                         } catch (Exception e) {
                             Log.e("Ontext Exception: ", e.toString());
@@ -60,6 +68,7 @@ public class ConvertActivity extends AppCompatActivity {
                 public void afterTextChanged(Editable editable) {  }
             });
 
+//  TO ALLOW FOR CONVERSION FROM JMD TO THE SELECTED CURRENCY
 //            txtR.addTextChangedListener(new TextWatcher() {
 //                @Override
 //                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {  }
@@ -84,11 +93,14 @@ public class ConvertActivity extends AppCompatActivity {
 
     }
 
+    //CONVERT FOREIGN CURRENCY TO JMD
     private Double fromFarin(Double cur, Double curr) {
         Double ans = 0.0;
         ans = cur * curr;
         return ans;
     }
+
+    //CONVERTS JMD TO FOREIGN CURRENCY
     private Double fromJMD(Double jmd, Double cur) {
         Double ans = 0.0;
         ans = jmd / cur;

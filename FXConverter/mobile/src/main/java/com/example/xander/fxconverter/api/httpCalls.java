@@ -1,5 +1,9 @@
 package com.example.xander.fxconverter.api;
 
+/**
+ * Created by Xander on 5/4/2018.
+ */
+
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -12,10 +16,6 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-/**
- *
- *
- */
 public class httpCalls {
 
     private static final String TAG = httpCalls.class.getSimpleName();

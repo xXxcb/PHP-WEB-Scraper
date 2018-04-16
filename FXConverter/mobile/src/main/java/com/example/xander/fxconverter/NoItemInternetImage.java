@@ -27,8 +27,6 @@ public class NoItemInternetImage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_item_internet_image);
         initComponent();
-        Tools.setSystemBarColor(this, android.R.color.white);
-        Tools.setSystemBarLight(this);
     }
 
     private void initComponent() {
